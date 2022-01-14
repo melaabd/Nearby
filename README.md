@@ -21,6 +21,7 @@
 ```ruby
 git clone https://github.com/melaabd/Nearby.git
 ```
+open Nearby.xcodeproj
 Build and Run
 
 # If I were to continue working on the project
