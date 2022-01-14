@@ -41,7 +41,7 @@ struct Venue: Codable {
 
 // MARK: - Address
 struct Address: Codable {
-    var freeformAddress: String?
+    var freeformAddress, municipalitySubdivision: String?
 }
 
 // MARK: - GeoBias
@@ -51,5 +51,5 @@ struct GeoBias: Codable {
 
 // MARK: - Poi
 struct Poi: Codable {
-    var name, phone: String?
+    var name, phone, url: String?
 }

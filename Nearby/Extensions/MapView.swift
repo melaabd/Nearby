@@ -27,7 +27,11 @@ extension MKMapView {
     ///   - centerCoordinate: `CLLocationCoordinate2D`
     ///   - radius: `CLLocationDistance`
     func setMapFocus(centerCoordinate: CLLocationCoordinate2D, radiusInKm radius: CLLocationDistance) {
-        let region: MKCoordinateRegion = MKCoordinateRegion(center: centerCoordinate, latitudinalMeters: radius * 2000, longitudinalMeters: radius * 2000)
+        let meters = radius * 2000
+        let region: MKCoordinateRegion = MKCoordinateRegion(center: centerCoordinate, latitudinalMeters: meters, longitudinalMeters: meters)
         setRegion(region, animated: false)
+        setCameraBoundary(MKMapView.CameraBoundary(coordinateRegion: region),animated: true)
+        let zoomRange = MKMapView.CameraZoomRange(maxCenterCoordinateDistance: meters * 3)
+        setCameraZoomRange(zoomRange, animated: true)
     }
 }

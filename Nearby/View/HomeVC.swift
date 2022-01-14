@@ -23,6 +23,9 @@ class HomeVC: BaseVC {
     }
     
     private func setupMap() {
+        if #available(iOS 13.0, *) {
+            venuesMap.overrideUserInterfaceStyle = .dark
+        }
         venuesMap.delegate = self
         venuesMap.setMapFocus(centerCoordinate: LocationManager.shared.location.coordinate, radiusInKm: 1)
     }
@@ -72,8 +75,19 @@ extension HomeVC: MKMapViewDelegate {
             view = MKMarkerAnnotationView(annotation: annotation,reuseIdentifier: identifier)
             view.canShowCallout = true
             view.calloutOffset = CGPoint(x: -5, y: 5)
-            view.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+            let mapsButton = UIButton(frame: CGRect(origin: CGPoint.zero, size: CGSize(width: 48, height: 48)))
+            mapsButton.setBackgroundImage(#imageLiteral(resourceName: "Map"), for: .normal)
+            view.rightCalloutAccessoryView = mapsButton
         }
         return view
     }
+    
+    /// implement clicking on `Map`  sign in annotation to open apple maps and starts direction
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView,calloutAccessoryControlTapped control: UIControl) {
+        guard let vAnnotation = view.annotation as? VAnnotation else {return }
+        
+        let launchOptions = [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving]
+        vAnnotation.mapItem?.openInMaps(launchOptions: launchOptions)
+    }
+
 }

@@ -33,7 +33,7 @@ class BaseViewModel {
     
     /// handle venues in annotations
     /// - Parameter venues: array of venues
-    private func prepareDataSource(venueList: [Venue]) {
+    func prepareDataSource(venueList: [Venue]) {
         annotations = venueList.map{ VAnnotation(venue: $0) }
         bindingDelegate?.reloadData()
     }
